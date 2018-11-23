@@ -20,9 +20,6 @@ before((done)=> {
 
 });
 
-
-
-
 beforeEach((done)=> {
     mongoose.connection.collections.users.drop(()=> {
         // now run next test

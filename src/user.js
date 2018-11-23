@@ -12,9 +12,15 @@ const UserSchema = new Schema({
         },
         required: [true, 'Name is required']
     },
-    postCount: Number,
-    posts: [PostSchema]
+    posts: [PostSchema],
+    likes: Number
 }) 
+
+// basically means... run this function whenever 'postCount' is requested
+// use function instead of arrow function to keep 'this' bound to the UserSchema object
+UserSchema.virtual('postCount').get(function(){
+    return this.posts.length;
+});
 
 // model
 const User = mongoose.model('user', UserSchema);

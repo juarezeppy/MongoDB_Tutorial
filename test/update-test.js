@@ -5,7 +5,7 @@ describe("Updating records", ()=> {
     let john;
 
     beforeEach((done)=> {
-        john = new User({name: 'john', postCount: 0});
+        john = new User({name: 'john', likes: 0});
         john.save()
             .then(()=> done());
     });
@@ -58,11 +58,11 @@ describe("Updating records", ()=> {
     });
 
     it("a user can have their postCount incremented by 4", (done)=> {
-        User.updateMany({name: 'john'}, {$inc: {postCount: 4} })
+        User.updateMany({name: 'john'}, {$inc: {likes: 4} })
         .then(()=> User.findOne({name:"john"}))
         .then(user=> {
             console.log('user :', user);
-            assert(user.postCount === 4);
+            assert(user.likes === 4);
             done();
         });
     });

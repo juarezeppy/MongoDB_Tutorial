@@ -3,7 +3,8 @@ const Schema = mongoose.Schema;
 
 // schema
 const UserSchema = new Schema({
-    name:String
+    name:String,
+    postCount: Number
 }) 
 
 // model

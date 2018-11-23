@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 const keys = require('../config/keys');
 
-console.log('keys :', keys);
-
+// done run any test prior to connecting to DB
 before((done)=> {
     mongoose.connect(
         keys.mongoURI,

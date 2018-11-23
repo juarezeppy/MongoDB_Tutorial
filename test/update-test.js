@@ -5,7 +5,7 @@ describe("Updating records", ()=> {
     let john;
 
     beforeEach((done)=> {
-        john = new User({name: 'john'});
+        john = new User({name: 'john', postCount: 0});
         john.save()
             .then(()=> done());
     });
@@ -14,7 +14,7 @@ describe("Updating records", ()=> {
         operation
         .then(()=>  User.find({})) // <---- finds all users
         .then((users) => {
-            console.log('users :', users);
+            // console.log('users :', users);
             assert(users.length === 1);
             assert(users[0].name === "bubba");
             done();
@@ -35,13 +35,13 @@ describe("Updating records", ()=> {
 
 
     it('A model instace can update', (done)=> {
-        assertName(john.update({name: "bubba"}), done)
+        assertName(john.updateOne({name: "bubba"}), done)
     });
 
     it('A model class can update', (done)=> {
         // for every record with name john, replace with bubba
         assertName(
-            User.update({name: "john"}, {name:"bubba"}),
+            User.updateMany({name: "john"}, {name:"bubba"}),
             done);
     });
 
@@ -55,6 +55,16 @@ describe("Updating records", ()=> {
         assertName(
             User.findByIdAndUpdate(john._id, {name: "bubba"}),
             done);
+    });
+
+    it("a user can have their postCount incremented by 4", (done)=> {
+        User.updateMany({name: 'john'}, {$inc: {postCount: 4} })
+        .then(()=> User.findOne({name:"john"}))
+        .then(user=> {
+            console.log('user :', user);
+            assert(user.postCount === 4);
+            done();
+        });
     });
 
 });
